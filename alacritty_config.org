@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Alacritty Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Alacritty config.
+#+STARTUP: content

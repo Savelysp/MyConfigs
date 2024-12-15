@@ -1,0 +1,5 @@
+#+TITLE: IF_mund's Neovim Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Neovim config.
+#+STARTUP: content
+

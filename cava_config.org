@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Cava Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Cava config.
+#+STARTUP: content
