@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Helix Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Helix config.
+#+STARTUP: content

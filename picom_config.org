@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Picom Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Picom config.
+#+STARTUP: content

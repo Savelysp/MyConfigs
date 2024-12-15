@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's NNN Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal NNN config.
+#+STARTUP: content

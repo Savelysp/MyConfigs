@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Kitty Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Kitty config.
+#+STARTUP: content

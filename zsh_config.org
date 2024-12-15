@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's ZSH Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal ZSH config.
+#+STARTUP: content

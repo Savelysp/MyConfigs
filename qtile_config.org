@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Qtile Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Qtile config.
+#+STARTUP: content
