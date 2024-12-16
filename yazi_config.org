@@ -1,4 +1,0 @@
-#+TITLE: IF_mund's Yazi Config
-#+AUTHOR: Savelysp (IF_mund)
-#+DESCRIPTION: IF_mund's personal Yazi config.
-#+STARTUP: content

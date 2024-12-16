@@ -1,0 +1,17 @@
+#+TITLE: IF_mund's Xmonad Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Xmonad config.
+#+STARTUP: content
+
+* Imports
+#+begin_src haskell
+  import XMonad
+#+end_src
+
+* Main
+#+begin_src haskell
+  main :: IO ()
+  main = xmonad $ def
+      { 
+      }
+#+end_src 

@@ -1,0 +1,21 @@
+#+TITLE: IF_mund's Yazi Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Yazi config.
+#+PROPERTY: header-args:toml :tangle ~/.config/yazi/yazi.toml
+#+STARTUP: content
+
+* Open
+#+begin_src toml
+  [opener]
+  edit = [
+      { run = '$EDITOR "$@"', desc="$EDITOR", block = true, for = "unix" },
+  ]
+  open = [
+      { run = 'zathura "$@"', desc = "Open", orphan = true },
+  ]
+
+  [open]
+  prepend_rules = [
+      { name = "*.pdf", use = "open" },
+  ]
+#+end_src 

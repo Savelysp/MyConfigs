@@ -272,11 +272,13 @@ lsp и всё сопутствующее я не понял вообще как 
     :custom
     ((projectile-completion-system 'ivy))
     :bind-keymap
-    ("C-c p" . projectile-command-map))
-    ;; :init
-    ;; ;; NOTE: Set this to the folder where you keep your Git repos!
-    ;; ;; (when (file-directory-p "~/projects")
-    ;; ;; (setq projectile-project-search-path '("~/projects"))
+    ("C-c p" . projectile-command-map)
+    :init
+    (setq projectile-project-search-path '("~/projects/")))
+
+    ;; NOTE: Set this to the folder where you keep your Git repos!
+    ;; (when (file-directory-p "~/projects")
+    ;; (setq projectile-project-search-path '("~/projects"))
     ;; (projectile-discover-projects-in-directory "~/projects/" 1)
     ;; (setq projectile-switch-project-action #'projectile-dired))
 

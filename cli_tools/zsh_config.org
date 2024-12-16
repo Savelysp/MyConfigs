@@ -1,0 +1,86 @@
+#+TITLE: IF_mund's ZSH Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal ZSH config.
+#+PROPERTY: header-args:rc :tangle ~/.zshrc
+#+STARTUP: content
+
+* prompt
+#+begin_src rc
+  eval "$(starship init zsh)"
+#+end_src
+
+* zoxide
+#+begin_src rc
+  eval "$(zoxide init zsh)"
+#+end_src
+
+* alias
+#+begin_src rc
+  alias emacs="emacsclient -c -a 'emacs'"
+  # alias ls="ls --color=tty"
+  alias ls="eza --icons=always"
+  alias enw="emacs -nw"
+  alias n="nvim"
+  alias cl="clear"
+#+end_src
+
+* history
+#+begin_src rc
+  HISTSIZE=10000
+  SAVEHIST=10000
+  HISTFILE=~/.zhistory
+  HISTDUP=erase
+  setopt sharehistory
+#+end_src
+
+* ...
+#+begin_src rc
+  DISABLE_AUTO_TITLE="true"
+  export EDITOR=nvim
+#+end_src
+
+* colors, (хз, что это)
+#+begin_src rc
+autoload -U colors && colors
+#+end_src
+
+* completion
+#+begin_src rc
+  autoload -U compinit
+  zstyle ':completion:*' menu select
+  zmodload zsh/complist
+  compinit
+  _comp_options+=(globdots)
+#+end_src
+
+* vi mode
+#+begin_src rc
+  bindkey -v
+  export KEYTIMEOUT=1
+#+end_src
+
+* vi completion
+#+begin_src rc
+  bindkey -M menuselect 'h' vi-backward-char
+  bindkey -M menuselect 'k' vi-up-line-or-history
+  bindkey -M menuselect 'l' vi-forward-char
+  bindkey -M menuselect 'j' vi-down-line-or-history
+  bindkey -v '^?' backward-delete-char
+#+end_src
+
+* hls path
+#+begin_src rc
+  export PATH=/home/ifmund/.ghcup/hls/2.9.0.1/bin:$PATH
+#+end_src
+
+* plugins
+#+begin_src rc
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#+end_src
+
+* Хз, что это
+#+begin_src rc
+  [ -f "/home/ifmund/.ghcup/env" ] && . "/home/ifmund/.ghcup/env" # ghcup-env
+#+end_src
+

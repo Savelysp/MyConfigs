@@ -1,4 +1,0 @@
-#+TITLE: IF_mund's Xmonad Config
-#+AUTHOR: Savelysp (IF_mund)
-#+DESCRIPTION: IF_mund's personal Xmonad config.
-#+STARTUP: content
