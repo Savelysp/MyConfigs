@@ -5,6 +5,28 @@
 #+STARTUP: content
 #+OPTIONS: toc:2
 
+* Package managment
+#+begin_src emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+
+  ;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+  ;;                          ("elpa" . "https://elpa.gnu.org/packages/")
+  ;;                          ("org" . "https://orgmode.org/elpa/")))
+  ;; (unless package-archive-contents
+  ;;   (package-refresh-contents))
+  (package-initialize)
+
+  ;; (unless (package-installed-p 'use-package)
+  ;;   (package-install 'use-package))
+  (eval-when-compile (require 'use-package))
+  ;; ;; (require 'package)
+
+  (setq use-package-always-ensure t)
+#+end_src
+
 * EMACS_TODO
 на самом деле в use-package emacs засовывать только то, что defined in C source code, остальное вполне себе по пакетам лежит, только встроенным
 
@@ -107,26 +129,6 @@
   ;; (setq initial-buffer-choice "~/.config/emacs/start.org")
 #+end_src
 
-* Package managment
-#+begin_src emacs-lisp
-  (require 'package)
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")))
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
-
-
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (eval-when-compile (require 'use-package))
-  ;; (require 'package)
-
-
-  (setq use-package-always-ensure t)
-#+end_src
-
 * Org mode
 ** Org
 #+begin_src emacs-lisp
@@ -207,6 +209,8 @@
   (add-to-list 'org-structure-template-alist '("jv" . "src java"))
   (add-to-list 'org-structure-template-alist '("cc" . "src C"))
   (add-to-list 'org-structure-template-alist '("sq" . "src SQL"))
+  (add-to-list 'org-structure-template-alist '("toml" . "src toml"))
+  (add-to-list 'org-structure-template-alist '("yml" . "src yaml"))
 #+end_src
 
 ** Org indent
@@ -249,7 +253,7 @@
     (org-roam-setup))
 #+end_src
 
-** TODO Other
+** TODO Othe
 Тут просто решил забить пока
 #+begin_src emacs-lisp
 ;; (setq org-todo-keywords
@@ -389,6 +393,16 @@ lsp и всё сопутствующее я не понял вообще как 
 *** Haskell
 #+begin_src emacs-lisp
   (use-package haskell-mode)
+#+end_src
+
+*** TOML
+#+begin_src emacs-lisp
+  (use-package toml-mode)
+#+end_src
+
+*** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
 #+end_src
 
 * Beauty

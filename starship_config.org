@@ -1,4 +1,28 @@
 #+TITLE: IF_mund's Starship Config
 #+AUTHOR: Savelysp (IF_mund)
 #+DESCRIPTION: IF_mund's personal Starship config.
+#+PROPERTY: header-args:toml :tangle ~/.config/starship.toml
 #+STARTUP: content
+
+* Prompt
+#+begin_src toml
+  add_newline = false
+  format ="""$directory$git_branch$python$character"""
+#+end_src 
+
+* Git
+#+begin_src toml
+  [git_branch]
+  symbol = ' '
+  # truncation_length = 4
+  truncation_symbol = ''
+  style = 'bold purple'
+  format = '[$symbol$branch(:$remote_branch)]($style)'
+#+end_src
+
+* Python
+#+begin_src toml
+  [python]
+  symbol = ' '
+  format = ' [(\(${symbol}$virtualenv\))]($style)'
+#+end_src 

@@ -1,4 +1,131 @@
 #+TITLE: IF_mund's Tmux Config
 #+AUTHOR: Savelysp (IF_mund)
 #+DESCRIPTION: IF_mund's personal Tmux config.
+#+PROPERTY: header-args:conf :tangle ~/.config/tmux/tmux.conf
 #+STARTUP: content
+
+* reload hotkey
+#+begin_src conf
+  unbind r
+  bind r source-file ~/.config/tmux/tmux.conf
+#+end_src
+
+* set prefix
+#+begin_src conf
+  # set prefix
+  # set -g prefix C-a
+#+end_src
+
+* enable mouse
+#+begin_src conf
+  set -g mouse on
+#+end_src
+
+* numeration from 1
+#+begin_src conf
+  set -g base-index 1
+  set -g pane-base-index 1
+#+end_src
+
+* bind split
+#+begin_src conf
+  unbind %
+  unbind '"'
+  bind | split-window -h
+  bind - split-window -v
+#+end_src
+
+* vim motions
+#+begin_src conf
+  bind-key h select-pane -L
+  bind-key j select-pane -D
+  bind-key k select-pane -U
+  bind-key l select-pane -R
+#+end_src
+
+* plugins
+** main plugin
+#+begin_src conf
+  set -g @plugin 'tmux-plugins/tpm'
+  set -g @plugin 'tmux-plugins/tmux-sensible'
+#+end_src
+
+** themepack
+#+begin_src conf
+  # set -g @plugin 'jimeh/tmux-themepack'
+  # set @themepack 'powerline/double/green'
+#+end_src
+
+** restoring
+#+begin_src conf
+  set -g @plugin 'tmux-plugins/tmux-resurrect'
+  set -g @plugin 'tmux-plugins/tmux-continuum'
+  set -g @plugin 'tmux-plugins/tmux-sessionist'
+  set -g @resurrect-capture-pane-contents 'on'
+  set -g @continuum-restore 'on'
+#+end_src
+
+** catppuccin
+#+begin_src conf
+  set -g @plugin 'catppuccin/tmux'
+  set -g @catppuccin_flavor 'mocha'
+  set -g @catppuccin_status_background "none"
+  set -g @catppuccin_window_status_style "none"
+  set -g @catppuccin_pane_status_enabled "off"
+  set -g @catppuccin_pane_border_status "off"
+#+end_src
+
+*** status left look and feel
+#+begin_src conf
+  set -g status-left-length 100
+  set -g status-left ""
+  set -ga status-left "#{?client_prefix,#{#[bg=#{@thm_red},fg=#{@thm_bg},bold]  #S },#{#[bg=#{@thm_bg},fg=#{@thm_green}]  #S }}"
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_overlay_0},none]│"
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_maroon}]  #{pane_current_command} "
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_overlay_0},none]│"
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
+  # set -ga status-left "#[bg=#{@thm_bg},fg=#{@thm_yellow}]#{?window_zoomed_flag,  zoom ,}"
+#+end_src
+
+*** status right look and feel
+#+begin_src conf
+  set -g status-right-length 100
+  set -g status-right ""
+  # set -ga status-right "#{?#{e|>=:10,#{battery_percentage}},#{#[bg=#{@thm_red},fg=#{@thm_bg}]},#{#[bg=#{@thm_bg},fg=#{@thm_pink}]}} #{battery_icon} #{battery_percentage} "
+  # set -ga status-right "#[bg=#{@thm_bg},fg=#{@thm_overlay_0}, none]│"
+  # set -ga status-right "#[bg=#{@thm_bg}]#{?#{==:#{online_status},ok},#[fg=#{@thm_mauve}] 󰖩 on ,#[fg=#{@thm_red},bold]#[reverse] 󰖪 off }"
+  # set -ga status-right "#[bg=#{@thm_bg},fg=#{@thm_overlay_0}, none]│"
+  set -ga status-right "#[bg=#{@thm_bg},fg=#{@thm_blue}] 󰭦 %Y-%m-%d 󰅐 %H:%M "
+#+end_src
+
+*** move bar on top
+#+begin_src conf
+  set -g status-position top
+  set -g status-style "bg=#{@thm_bg}"
+  set -g status-justify "absolute-centre"
+#+end_src
+
+*** window look and feel
+#+begin_src conf
+  set -wg automatic-rename on
+  set -g automatic-rename-format "Window"
+#+end_src
+
+*** window status
+#+begin_src conf
+  set -g window-status-format " #I#{?#{!=:#{window_name},Window},: #W,} "
+  set -g window-status-style "bg=#{@thm_bg},fg=#{@thm_rosewater}"
+  set -g window-status-last-style "bg=#{@thm_bg},fg=#{@thm_peach}"
+  set -g window-status-activity-style "bg=#{@thm_red},fg=#{@thm_bg}"
+  set -g window-status-bell-style "bg=#{@thm_red},fg=#{@thm_bg},bold"
+  set -gF window-status-separator "#[bg=#{@thm_bg},fg=#{@thm_overlay_0}]│"
+
+  set -g window-status-current-format " #I#{?#{!=:#{window_name},Window},: #W,} "
+  set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
+#+end_src
+
+* run plugins(should be last)
+#+begin_src conf
+  run '~/.tmux/plugins/tpm/tpm'
+#+end_src
