@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Foot Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Foot config.
+#+STARTUP: content

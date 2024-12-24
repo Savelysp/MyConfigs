@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's eww Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal eww config.
+#+STARTUP: content

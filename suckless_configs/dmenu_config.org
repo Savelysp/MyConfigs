@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Dmenu Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Dmenu config.
+#+STARTUP: content

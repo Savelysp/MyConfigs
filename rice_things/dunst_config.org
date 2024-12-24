@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Dunst Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Dunst config.
+#+STARTUP: content

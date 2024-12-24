@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's ST Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal ST config.
+#+STARTUP: content

@@ -78,7 +78,9 @@
   ;; transparency
   (set-frame-parameter nil 'alpha-background 95)
   (add-to-list 'default-frame-alist '(alpha-background . 95))
-
+  
+  (set-face-attribute 'default nil :font "JetbrainsMono" :height 120)
+  ;; (set-frame-font "JetbrainsMono Nerd Font" nil t)
   ;; tabs settings
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 4)
@@ -192,7 +194,7 @@
   (defun efs/org-mode-visual-fill ()
     (setq visual-fill-column-width 150
           visual-fill-column-center-text t)
-    (visual-fill-column-mode -1))
+    (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
     :hook (org-mode . efs/org-mode-visual-fill))
@@ -233,27 +235,74 @@
     (org-roam-directory "~/RoamNotes")
     (org-roam-completion-everywhere t)
     (org-roam-capture-templates
+
      '(("d" "default"
         plain "%?"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("m" "Map"
+        plain (file "~/RoamNotes/Templates/MapNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("e" "Ephemeral"
+        plain (file "~/RoamNotes/Templates/EphemeralNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
         :unnarrowed t)
        ("p" "Project"
         plain (file "~/RoamNotes/Templates/ProjectNoteTemplate.org")
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("c" "Concept"
+        plain (file "~/RoamNotes/Templates/ConceptNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("w" "Framework"
+        plain (file "~/RoamNotes/Templates/FrameworkNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("v" "VariableTag"
+        plain (file "~/RoamNotes/Templates/VariableTagNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("l" "Language"
+        plain (file "~/RoamNotes/Templates/LanguageNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("t" "Tool"
+        plain (file "~/RoamNotes/Templates/ToolNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
+        :unnarrowed t)
+       ("f" "Fact"
+        plain (file "~/RoamNotes/Templates/FactNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
         :unnarrowed t)
        ("b" "Book note"
         plain (file "~/RoamNotes/Templates/BookNoteTemplate.org")
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U")
         :unnarrowed t)))
+
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
-           ("C-M-i"   . completion-at-point))
+           :map org-mode-map
+           ("C-M-i"   . completion-at-point)
+           :map org-roam-dailies-map
+           ("Y" . org-roam-dailies-capture-yesterday)
+           ("T" . org-roam-dailies-capture-tomorrow))
+    :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
     :config
+    (setq org-roam-node-display-template "${title:100} ${tags:100}")
+    (require 'org-roam-dailies)
     (org-roam-setup))
 #+end_src
 
-** TODO Othe
+** Org roam ui
+#+begin_src emacs-lisp
+  (use-package org-roam-ui)
+#+end_src
+
+** TODO Other
 Тут просто решил забить пока
 #+begin_src emacs-lisp
 ;; (setq org-todo-keywords
@@ -424,8 +473,8 @@ lsp и всё сопутствующее я не понял вообще как 
     ;; (load-theme 'doom-gruvbox t))
     ;; (load-theme 'doom-solarized-dark t))
     ;; (load-theme 'doom-dracula t))
-    (load-theme 'doom-one t))
-    ;; (load-theme 'doom-monokai-pro t))
+    ;; (load-theme 'doom-one t))
+    (load-theme 'doom-monokai-pro t))
 #+end_src
 
 ** Rainbow delimiters
@@ -518,6 +567,13 @@ lsp и всё сопутствующее я не понял вообще как 
   (use-package ivy-rich
     :init
     (ivy-rich-mode t))
+#+end_src
+
+** Vertico
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode))
 #+end_src
 
 ** Which Key

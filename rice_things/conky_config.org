@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's Conky Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Conky config.
+#+STARTUP: content

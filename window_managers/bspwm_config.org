@@ -1,0 +1,4 @@
+#+TITLE: IF_mund's BSPWM Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal BSPWM config.
+#+STARTUP: content

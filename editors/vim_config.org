@@ -1,104 +1,104 @@
 #+TITLE: IF_mund's Vim Config
 #+AUTHOR: Savelysp (IF_mund)
 #+DESCRIPTION: IF_mund's personal Vim config.
-#+PROPERTY: header-args:vimscript :tangle ~/.vimrc
+#+PROPERTY: header-args:shell :tangle ~/.vimrc
 #+STARTUP: content
 
 * Кодировка UTF-8
-#+begin_src vimscript
+#+begin_src shell
   set encoding=utf8
 #+end_src 
 
 * Отключение совместимости с vi. Нужно для правильной работы некоторых опций
-#+begin_src vimscript
+#+begin_src shell
   set nocompatible
 #+end_src
 
 * Игнорировать регистр при поиске
-#+begin_src vimscript
+#+begin_src shell
   set ignorecase
 #+end_src
 
 * Не игнорировать регистр, если в паттерне есть большие буквы
-#+begin_src vimscript
+#+begin_src shell
   set smartcase
 #+end_src
 
 * Подсвечивать найденный паттерн
-#+begin_src vimscript
+#+begin_src shell
   set hlsearch
 #+end_src
 
 * Интерактивный поиск
-#+begin_src vimscript
+#+begin_src shell
   set incsearch
 #+end_src
 
 * Размер табов - 4
-#+begin_src vimscript
+#+begin_src shell
   set tabstop=4
   set softtabstop=4
   set shiftwidth=4
 #+end_src
 
 * Превратить табы в пробелы
-#+begin_src vimscript
+#+begin_src shell
   set expandtab
 #+end_src
 
 * Таб перед строкой будет вставлять количество пробелов определённое в shiftwidth
-#+begin_src vimscript
+#+begin_src shell
   set smarttab
 #+end_src
 
 * Копировать отступ на новой строке
-#+begin_src vimscript
+#+begin_src shell
   set autoindent
   set smartindent
 #+end_src
 
 * Показывать номера строк
-#+begin_src vimscript
+#+begin_src shell
   set number
 #+end_src
 
 * Относительные номера строк
-#+begin_src vimscript
+#+begin_src shell
   set relativenumber
 #+end_src
 
 * Автокомплиты в командной строке
-#+begin_src vimscript
+#+begin_src shell
   set wildmode=longest,list
 #+end_src
 
 * Подсветка синтаксиса
-#+begin_src vimscript
+#+begin_src shell
   syntax on
 #+end_src
 
 * Разрешить использование мыши
-#+begin_src vimscript
+#+begin_src shell
   set mouse=a
 #+end_src
 
 * Использовать системный буфер обмена
-#+begin_src vimscript
+#+begin_src shell
   set clipboard=unnamedplus
 #+end_src
 
 * Быстрый скроллинг
-#+begin_src vimscript
+#+begin_src shell
   set ttyfast
 #+end_src
 
 * Курсор во время скроллинга будет всегда в середине экрана
-#+begin_src vimscript
+#+begin_src shell
   set so=30
 #+end_src
 
 * highlight guibg
-#+begin_src vimscript
+#+begin_src shell
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 #+end_src
