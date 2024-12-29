@@ -3,3 +3,66 @@
 #+DESCRIPTION: IF_mund's personal Helix config.
 #+PROPERTY: header-args:toml :tangle ~/.config/helix/config.toml
 #+STARTUP: content
+
+* Theme
+#+begin_src toml
+theme = "monokai_pro_transparent"
+#+end_src
+
+* Transparent theme
+#+begin_src toml :tangle ~/.config/helix/themes/monokai_pro_transparent.toml
+inherits = "dracula"
+"ui.background" = { fg = "foreground" }
+#+end_src
+
+* Editor
+#+begin_src toml
+[editor]
+line-number = "relative"
+scrolloff = 10
+cursorline = true
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1          
+#+end_src
+
+* Modeline
+#+begin_src toml
+[editor.statusline]
+left = ["mode", "file-name", "position", "position-percentage"]
+center = ["spinner"]
+right = ["diagnostics", "file-encoding", "file-type", "version-control"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+#+end_src
+
+* Langs
+** Python
+#+begin_src toml :tangle ~/.config/helix/languages.toml
+[[language]]
+name = "python"
+language-servers = [ "ruff" , "pyright" ]#, "pylsp" ] #  , 
+
+# [language-server.pylsp.config.pylsp]
+# plugins.pylsp_mypy.enabled = true
+# plugins.pylsp_mypy.live_mode = true
+                
+[language-server.pyright.config.python.analysis]
+typeCheckingMode = "off"
+autoImportCompletions = true
+
+# # if you choose `ruff-lsp`
+[language-server.ruff]
+command = "ruff-lsp"
+[language-server.ruff.config.settings]
+args = ["--ignore", "E501"]
+# if you choose `ruff` itself
+# [language-server.ruff]
+# command = "ruff"
+# args = ["server"]
+#+end_src
+

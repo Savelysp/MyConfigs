@@ -14,7 +14,7 @@
   eval "$(zoxide init zsh)"
 #+end_src
 
-* alias
+* alias (добавить алиас для дума)
 #+begin_src shell
   alias emacs="emacsclient -c -a 'emacs'"
   # alias ls="ls --color=tty"
@@ -68,9 +68,9 @@ autoload -U colors && colors
   bindkey -v '^?' backward-delete-char
 #+end_src
 
-* hls path
+* hls path (добавить имакс)
 #+begin_src shell
-  export PATH=/home/ifmund/.ghcup/hls/2.9.0.1/bin:$PATH
+  export PATH=/home/ifmund/.local/bin:/home/ifmund/.config/emacs/bin:/home/ifmund/.ghcup/hls/2.9.0.1/bin:$PATH
 #+end_src
 
 * plugins
