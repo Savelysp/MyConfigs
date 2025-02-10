@@ -1,0 +1,6 @@
+#+TITLE: IF_mund's Sampler Config
+#+AUTHOR: Savelysp (IF_mund)
+#+DESCRIPTION: IF_mund's personal Sampler config.
+#+PROPERTY: header-args:toml :tangle ~/.config/sampler.yml
+#+STARTUP: content
+

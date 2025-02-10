@@ -5,13 +5,13 @@
 
 * Imports
 #+begin_src haskell
-  import XMonad
+import XMonad
 #+end_src
 
 * Main
 #+begin_src haskell
-  main :: IO ()
-  main = xmonad $ def
-      { 
-      }
+main :: IO ()
+main = xmonad $ def
+    { 
+    }
 #+end_src 

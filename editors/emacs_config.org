@@ -29,6 +29,7 @@
 (use-package emacs
   :config
   (setq
+   ;; text-mode-ispell-word-completion nil
    ;; relative numbers
    display-line-numbers-type 'relative
    ;; safe themes
@@ -67,15 +68,19 @@
                   visual-fill-column-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-  ;; (setq treesit-language-source-alist
-  ;;  '((python "https://github.com/tree-sitter/tree-sitter-python")
-  ;;    (rust "https://github.com/tree-sitter/tree-sitter-rust")))
-  
+  (setq treesit-language-source-alist
+   '((python "https://github.com/tree-sitter/tree-sitter-python")
+     (haskell "https://github.com/tree-sitter/tree-sitter-haskell")
+     (rust "https://github.com/tree-sitter/tree-sitter-rust")))
+  (customize-set-value 'treesit-font-lock-level 4)
+  (custom-set-faces
+   '(font-lock-operator-face ((t (:foreground "#F86882")))))
   ;; better scrolling experience
-  (setq scroll-margin 20
-        scroll-conservatively 101 ; > 100
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil)
+  (setq
+   scroll-margin 20
+   scroll-conservatively 101 ; > 100
+   scroll-preserve-screen-position t
+   auto-window-vscroll nil)
 
   (setq-default
    indicate-empty-lines t
@@ -93,7 +98,7 @@
   (org-mode . variable-pitch-mode)
   (org-mode . visual-line-mode) 
   :config
-  ;; fix pitch
+  ;; fix pitch (may be use-package mixed pitch
   (custom-theme-set-faces
    'user
    '(org-block ((t (:inherit fixed-pitch))))
@@ -110,23 +115,31 @@
    '(org-level-6 ((t (:inherit outline-5 :height 1.1))))
    '(org-level-7 ((t (:inherit outline-5 :height 1.1)))))
 
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (font-lock-add-keywords
+   'org-mode
+   '(("^ *\\([-]\\) "
+      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
   ;; org tempo
   (require 'org-tempo)
-  (setq org-structure-template-alist
-        '(("el"   . "src emacs-lisp")
-          ("sh"   . "src shell")
-          ("lua"  . "src lua")
-          ("hs"   . "src haskell")
-          ("jv"   . "src java")
-          ("cc"   . "src C")
-          ("sql"  . "src SQL")
-          ("toml" . "src toml")
-          ("yml"  . "src yaml")
-          ("py"   . "src python")))
+  (setq
+   org-structure-template-alist
+   '(
+     ("C" . "comment")
+     ("e" . "example")
+     ("q" . "quote")
+     ("v" . "verse")
+     
+     ("el"   . "src emacs-lisp")
+     ("cc"   . "src c")
+     ("hs"   . "src haskell")
+     ("jv"   . "src java")
+     ("lua"  . "src lua")
+     ("sh"   . "src shell")
+     ("sql"  . "src sql")
+     ("toml" . "src toml")
+     ("yml"  . "src yaml")
+     ("py"   . "src python")))
 
   ;; todo keywords
   ;; (setq org-todo-keywords
@@ -140,17 +153,21 @@
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
 
+  (global-set-key (kbd "C-M-<return>") 'org-insert-todo-heading)
+  
   ;;agenda
   (global-set-key (kbd "C-c o a") #'org-agenda)
-  (setq org-agenda-custom-commands
-        '(("d" "Daily Agenda"
-           ((agenda "" ((org-agenda-span 'day)))))))
+  (setq
+   org-agenda-custom-commands
+   '(("d" "Daily Agenda"
+      ((agenda "" ((org-agenda-span 'day)))))))
 
   ;; other
-  (setq org-ellipsis " ▾"
-        org-log-done 'time
-        org-src-preserve-indentation t
-        org-hide-emphasis-markers t))
+  (setq
+   org-ellipsis " ▾"
+   org-log-done 'time
+   org-src-preserve-indentation t
+   org-hide-emphasis-markers t))
 #+end_src
 
 ** Org Bullets
@@ -167,8 +184,9 @@
   (use-package visual-fill-column
     :hook (org-mode . visual-fill-column-mode)
     :config
-    (setq-default visual-fill-column-width 150
-                  visual-fill-column-center-text t))
+    (setq-default
+     visual-fill-column-width 150
+     visual-fill-column-center-text t))
 #+end_src
 
 ** Org roam
@@ -193,7 +211,7 @@
       :unnarrowed t)
      ("p" "Project"
       plain (file "~/RoamNotes/Templates/ProjectNoteTemplate.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}/n#+category: ${title}\n#+date: %U")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+date: %U")
       :unnarrowed t)
      ("c" "Concept"
       plain (file "~/RoamNotes/Templates/ConceptNoteTemplate.org")
@@ -289,9 +307,54 @@
                  (my/org-roam-copy-todo-to-today))))
 #+end_src
 
-** Org brain
+** Other
+avy
+doom-package:evil-org if doom-module::editor evil
+doom-package:htmlize
+doom-package:jupyter if doom-module:+jupyter
+doom-package:ob-ammonite if doom-module::lang scala
+doom-package:ob-async
+doom-package:ob-crystal if doom-module::lang crystal
+doom-package:ob-go if doom-module::lang go
+doom-package:ob-nim if doom-module::lang nim
+doom-package:ob-racket if doom-module::lang racket
+doom-package:ob-restclient if doom-module::lang rest
+doom-package:ob-rust if doom-module::lang rust
+doom-package:org-contacts if doom-module:+contacts
+doom-package:org-cliplink
+doom-package:org-download if doom-module:+dragndrop
+doom-package:orgit
+doom-package:org-noter if doom-module:+noter
+doom-package:org-pdftools if doom-module::tools pdf
+doom-package:org-plus-contrib
+doom-package:org-passwords if doom-module:+passwords
+doom-package:org-pomodoro if doom-module:+pomodoro
+doom-package:org-roam (v1) if doom-module:+roam
+doom-package:org-roam (v2) if doom-module:+roam2
+doom-package:ox-clip
+doom-package:ox-hugo if doom-module:+hugo
+doom-package:ox-pandoc if doom-module:+pandoc
+doom-package:ox-rst if doom-module::lang rst
+doom-package:toc-org
+if doom-module:+gnuplot
+doom-package:gnuplot
+doom-package:gnuplot-mode
+if doom-module:+present
+doom-package:centered-window
+doom-package:org-tree-slide
+doom-package:org-re-reveal
+if doom-module:+pretty
+doom-package:org-superstar
+doom-package:org-fancy-priorities
+
 * Editor
-** Evil
+** Evil 
+doom-package:evil-vimish-fold
+doom-package:vimish-fold
+if doom-module::tools tree-sitter
+doom-package:ts-fold
+doom-package:evil-multiedit
+doom-package:evil-mc
 #+begin_src emacs-lisp
 (use-package evil
   :init
@@ -307,6 +370,7 @@
 ;;   (evil-lion-mode))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -316,7 +380,7 @@
   (evil-collection-init))
 
 (use-package evil-org
-  :after org
+  :after (org evil)
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
@@ -341,11 +405,27 @@
 #+end_src
 
 ** Electric
-** snippets
-** Multiple cursors
+#+begin_src emacs-lisp
+(use-package electric
+  :hook (python-ts-mode . electric-pair-mode))
+#+end_src
+
+** Yasnippet
+doom-package:yasnippet
+doom-package:auto-yasnippet
+doom-package:doom-snippets
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :config
+  (setq yas-snippet-dirs
+        '("~/projects/my_snippets"))
+  
+  (yas-global-mode 1))
+#+end_src
+
 * UI
 ** Theme
-*** Doom Themes
+*** Themes
 #+begin_src emacs-lisp
 (use-package doom-themes
   :config
@@ -357,6 +437,8 @@
   ;; (load-theme 'doom-dracula t))
   ;; (load-theme 'doom-one t))
   (load-theme 'doom-monokai-pro t))
+
+(use-package catppuccin-theme) 
 #+end_src
 
 *** Solaire mode
@@ -378,6 +460,12 @@
   :hook org-mode prog-mode)
 #+end_src
 
+*** Rainbow identifiers
+#+begin_src emacs-lisp
+;; (use-package rainbow-identifiers)
+#+end_src
+
+*** highlight-numbers
 *** All the icons
 #+begin_src emacs-lisp
 (use-package all-the-icons)
@@ -387,8 +475,12 @@
 
 *** Indent guides
 #+begin_src emacs-lisp
-;; (use-package indent-bars
-;;   :hook (python-mode . indent-bars-mode))
+(use-package indent-bars
+  :custom
+  (indent-bars-pattern ".")
+  (indent-bars-display-on-blank-lines)
+  (indent-bars-starting-column 0)
+  :hook (python-ts-mode . indent-bars-mode))
 #+end_src
 
 *** hl todo
@@ -404,6 +496,9 @@
 #+end_src
 
 *** Ophints
+doom-package:evil-goggles if doom-module::editor evil
+doom-package:goggles unless doom-module::editor evil
+
 ** Dashboard (Enlight)
 #+begin_src emacs-lisp
 (use-package dashboard
@@ -412,16 +507,21 @@
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-center-content nil)
-  (setq dashboard-startup-banner 1)
-  (setq dashboard-items '((recents . 5)
+  ;; (setq dashboard-startup-banner 1)
+  (setq dashboard-startup-banner 5)
+  (setq dashboard-items '((recents . 3)
                           (bookmarks . 3)
-                          (agenda . 5)
+                          (agenda . 3)
                           (projects . 3)))
   :config
   (dashboard-setup-startup-hook))
 #+end_src
 
 ** Modeline
+doom-package:anzu
+doom-package:doom-modeline unless doom-module:+light
+doom-package:evil-anzu if doom-module::editor evil
+
 #+begin_src emacs-lisp
 (use-package doom-modeline
   :config
@@ -430,7 +530,12 @@
 
 ** Helpfull
 #+begin_src emacs-lisp
-(use-package helpful)
+(use-package helpful
+  :bind
+  ([remap describe-function] . helpful-callable)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . helpful-variable)
+  ([remap describe-key] . helpful-key))
 #+end_src
 
 ** Command log
@@ -439,10 +544,25 @@
 #+end_src
 
 ** Popup
+** Writeroom
+#+begin_src emacs-lisp
+(use-package writeroom-mode)
+#+end_src
+
 ** Snow
 #+begin_src emacs-lisp
 (use-package snow)
 #+end_src
+
+** Fireplace
+#+begin_src emacs-lisp
+(use-package fireplace)
+#+end_src
+
+** Other
+doom-package:diff-hl
+doom-package:vi-tilde-fringe
+doom-package:persp-mode
 
 * Keybinds
 ** Which Key
@@ -459,7 +579,7 @@
   :config
   (general-evil-setup)
   (general-create-definer rune/leader-keys
-    :keymaps '(normal emacs)
+    :keymaps '(normal visual emacs)
     :prefix "SPC")
   
   (rune/leader-keys
@@ -468,7 +588,8 @@
     "ri" '(org-roam-node-insert :which-key "insert")
     "rf" '(org-roam-node-find :which-key "find")
     "ru" '(org-roam-ui-mode :which-key "graph")
-    "rd" '(:ignore t :which-key "daily")
+    "rd" '(org-roam-dailies-map :which-key "daily")
+    "rl" '(org-roam-buffer-toggle :which-key "links")
 
     ;; leaving emacs
     "q" '(:ignore t :which-key "leaving")
@@ -482,13 +603,17 @@
     "fs" '(save-buffer :which-key "save file")
 
     ;; window management
-    "w" '(:ignore t :which-key "windows")
+    "w" '(evil-window-map :which-key "windows")
 
     ;; dired
     "d" '(:ignore t :which-key "dired")
 
     ;; help
     "h" '(:ignore t :which-key "help")
+    "hf" '(helpful-callable t :which-key "desc function")
+    "hc" '(helpful-command t :which-key "desc command")
+    "hv" '(helpful-variable t :which-key "desc variable")
+    "hk" '(helpful-key t :which-key "desc key")
 
     ;; git
     "g" '(:ignore t :which-key "git")
@@ -500,9 +625,18 @@
     "md" '(org-deadline :which-key "deadline")
     "mt" '(org-todo :which-key "todo")
     "ma" '(org-agenda :which-key "agenda")
+    "mo" '(org-open-at-point :which-key "open")
 
     ;; buffers
     "b" '(:ignore t :which-key "buffers")
+
+    ;; projects
+    "p" '(:ignore t :which-key "projects")
+    "ps" '(consult-projectile-switch-project :which-key "switch project")
+    "pf" '(project-find-file :which-key "file")
+    "pd" '(project-find-dir :which-key "dir")
+    "pD" '(project-dired :which-key "dired")
+    "pb" '(project-switch-to-buffer :which-key "buffer")
 
     ;; lsp
     "l" '(:ignore t :which-key "lsp")
@@ -511,6 +645,7 @@
     "t" '(:ignore t :which-key "toggle")
 
     ;; other
+    "y" '(yas-insert-snippet :which-key "insert snippet")
     "c" '(consult-theme :which-key "choose theme")
     "." '(find-file :which-key "find file")
     "," '(consult-buffer :which-key "choose buffer")))
@@ -518,13 +653,25 @@
 
 * Completion
 ** Vertico
+doom-package:nerd-icons-completion if doom-module:+icons
+doom-package:consult
+doom-package:consult-flycheck if doom-module::checkers syntax
+doom-package:embark
+doom-package:embark-consult
+doom-package:marginalia
+doom-package:orderless
+doom-package:vertico
+doom-package:vertico-posframe if doom-module:+childframe
+doom-package:wgrep
 #+begin_src emacs-lisp
 (use-package vertico
-  :bind (:map vertico-map
-              ("C-j" . vertico-next)
-              ("C-k" . vertico-previous)
-              ("C-h" . vertico-directory-up)
-              ("C-l" . vertico-directory-enter))
+  :bind
+  (:map
+   vertico-map
+   ("C-j" . vertico-next)
+   ("C-k" . vertico-previous)
+   ("C-h" . vertico-directory-up)
+   ("C-l" . vertico-directory-enter))
   :config
   (setq vertico-cycle t)
   :init
@@ -549,82 +696,273 @@
   ("C-x b" . consult-buffer))
 #+end_src
 
-** PAUSED Corfu
+** Company
+doom-package:company-box if doom-module:+childframe
+doom-package:company-dict
+doom-package:company-mode
+#+begin_src emacs-lisp
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :config
+  ;; (global-set-key (kbd "C-x C-y") 'company-yasnippet)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+#+end_src
+
+** Corfu
+doom-package:corfu
+doom-package:cape
+doom-package:nerd-icons-corfu if doom-module::completion corfu +icons
+doom-package:orderless if doom-module::completion corfu +orderless
+doom-package:corfu-terminal if doom-module::os tty
+doom-package:yasnippet-capf if doom-module::editor snippets
+
 #+begin_src emacs-lisp
 ;; (use-package corfu
 ;;   :custom
-;;   (corfu-cycle t)                
+;;   (corfu-cycle t)
 ;;   (corfu-auto t)
-;;   (corfu-auto-prefix 2)
-;;   (corfu-auto-delay 0.1)
-;;   :init
-;;   (global-corfu-mode))
+;;   (corfu-auto-prefix 1)
+;;   ;; (corfu-preview-current 'insert)
+;;   (corfu-auto-delay 0)
+;;   :hook (prog-mode . corfu-mode))
+
+;; (use-package cape)
+
+;; (use-package nerd-icons-corfu
+;;   :after corfu
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+;; (use-package yasnippet-capf
+;;   :after cape
+;;   :config
+;;   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 #+end_src
 
 * Tools
-** PAUSED Projectile
+** Projectile
 #+begin_src emacs-lisp
-;; (use-package projectile
-;;   :bind (
-;;          :map projectile-mode-map
-;;          ("C-c p" . projectile-command-map))
-;;   :init
-;;   (setq projectile-project-search-path '("~/projects/"))
-;;   (projectile-mode))
+(use-package projectile
+  :config
+  (setq projectile-project-search-path '("~/projects/"))
+  (projectile-mode 1))
+(use-package consult-projectile)
 #+end_src
 
-** PAUSED LSP
+** LSP
+may be eglot
 #+begin_src emacs-lisp
-;; (use-package lsp-mode
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;          (python-ts-mode . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration))
-;;   :commands lsp)
+(use-package lsp-mode
+  ;; :custom
+  ;; (lsp-completion-provider :none) ;; we use Corfu!
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  ;; (defun my/lsp-mode-setup-completion ()
+  ;;   (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+  ;;         '(flex))) ;; Configure flex
+  :hook (;; replace XXX-mode with concrete major-mode
+         (python-ts-mode . lsp)
+         (haskell-ts-mode . lsp)
+         ;; completion
+         ;; (lsp-completion-mode . my/lsp-mode-setup-completion)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
-;; ;; optionally
-;; (use-package lsp-ui :commands lsp-ui-mode)
-;; (use-package consult-lsp)
-
-;; ;; optionally if you want to use debugger
-;; (use-package dap-mode)
-;; ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package consult-lsp)
 #+end_src
 
-** PAUSED Syntax check
+** Syntax check
 #+begin_src emacs-lisp
-;; (use-package flycheck
-;;   :init (global-flycheck-mode))
+(use-package flycheck
+  :init (global-flycheck-mode))
 #+end_src
 
-** PAUSED Lookup
+** quickrun
+eros
+** PAUSED Dumb jump
+doom-package:dumb-jump
+doom-package:helm-xref if doom-module::completion helm
+doom-package:ivy-xref if doom-module::completion ivy
+doom-package:request
+if doom-module:+docsets
+doom-package:dash-docs
+doom-package:counsel-dash if doom-module::completion ivy
+doom-package:helm-dash if doom-module::completion helm
+if doom-module:+dictionary
+if macOS
+doom-package:osx-dictionary
+else
+doom-package:define-word
+doom-package:powerthesaurus
+if doom-module:+offline
+doom-package:wordnut
+doom-package:synosaurus
+
++
+(package! better-jumper 
+(package! dtrt-indent 
+(package! smartparens 
+(package! ws-butler 
+  
 ** PAUSED Debugger
+doom-package:realgud
+doom-package:realgud-trepan-ni if doom-module::lang javascript
+if doom-module:+lsp
+doom-package:dap-mode
+doom-package:posframe
 ** PAUSED Magit
-** PAUSED Vterm
-* Langs
-** PAUSED Python
+doom-package:evil-magit if doom-module::editor evil +everywhere
+doom-package:forge if doom-module:+forge
+doom-package:code-review if doom-module:+forge
+doom-package:magit
+* Terminals
+** Vterm
 #+begin_src emacs-lisp
-;; (use-package python-mode
-;;   :hook (python-mode . python-ts-mode))
-
-;; (use-package pyvenv
-;;   :hook (python-ts-mode . pyvenv-mode))
-
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
-;;   :hook (python-ts-mode . (lambda ()
-;;                           (require 'lsp-pyright)
-;;                           (lsp))))  ; or lsp-deferred
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000))
 #+end_src
 
+** Eshell
+* Langs
+** Python
+doom-package:anaconda-mode
+doom-package:conda
+doom-package:nose
+doom-package:pipenv
+doom-package:pip-requirements
+doom-package:poetry if doom-module:+poetry
+doom-package:pyimport
+doom-package:py-isort
+doom-package:python-pytest
+if doom-module:+cython
+doom-package:cython-mode
+doom-package:flycheck-cython if doom-module::checkers syntax
+#+begin_src emacs-lisp
+(use-package python-mode
+  :hook (python-mode . python-ts-mode))
+
+(use-package pyvenv ;; or pyenv-mode
+  :hook (python-ts-mode . pyvenv-mode))
+
+(use-package flymake-ruff
+  :ensure t
+  :hook (python-ts-mode . flymake-ruff-load))
+
+(use-package lsp-pyright
+  :custom
+  (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+  (lsp-pyright-disable-organize-imports t)
+  (lsp-pyright-type-checking-mode "off")
+  :hook (python-ts-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
+#+end_src
+
+** Haskell
+#+begin_src emacs-lisp
+(use-package haskell-mode)
+(use-package haskell-ts-mode)
+(use-package lsp-haskell)
+#+end_src
+
+** Rust
+(package! rust-mode 
+(package! rustic 
+** Shell
+doom-package:company-shell if doom-module::completion company
+doom-package:fish-mode if doom-module:+fish
+doom-package:powershell-mode if doom-module:+powershell
+** latex
+doom-package:adaptive-wrap
+doom-package:auctex
+doom-package:cdlatex if doom-module:+cdlatex
+doom-package:evil-tex if doom-module::editor evil +everywhere
+doom-package:latex-preview-pane
+if doom-module::completion company
+doom-package:company-auctex
+doom-package:company-math
+doom-package:company-reftex
+
+** JavaScript
+doom-package:js2-refactor
+doom-package:nodejs-repl
+doom-package:npm-mode
+doom-package:rjsx-mode
+doom-package:skewer-mode (DEPRECATED)
+doom-package:tide
+doom-package:typescript-mode
+doom-package:xref-js2 if doom-module::tools lookup
+** Java
+doom-package:android-mode
+doom-package:groovy-mode
+doom-package:meghanada if doom-module:+meghanada
+if doom-module:+eclim
+doom-package:eclim
+doom-package:company-emacs-eclim if doom-module::completion company
+if doom-module:+lsp and not doom-module::tools lsp +eglot
+doom-package:lsp-java
+** Go
+doom-package:company-go if doom-module::completion company (DEPRECATED)
+doom-package:flycheck-golangci-lint if doom-module::checkers syntax
+doom-package:go-eldoc
+doom-package:go-gen-test
+doom-package:go-mode
+doom-package:gorepl-mode
+doom-package:go-tag
+
+** Emacs lisp
+doom-package:buttercup
+doom-package:elisp-def
+doom-package:elisp-demos
+doom-package:flycheck-cask if doom-module::checkers syntax
+doom-package:flycheck-package if doom-module::checkers syntax
+doom-package:highlight-quoted
+doom-package:macrostep
+doom-package:overseer
+** Elixir
+doom-package:elixir-mode
+doom-package:exunit
+doom-package:flycheck-credo if doom-module::checkers syntax
+** CC
+doom-package:cmake-mode
+doom-package:cuda-mode
+doom-package:demangle-mode
+doom-package:disaster
+doom-package:glsl-mode
+doom-package:company-glsl
+doom-package:modern-cpp-font-lock unless doom-module:+tree-sitter
+doom-package:opencl-mode
+if doom-module:+lsp
+doom-package:ccls if doom-module::tools lsp -eglot
 ** Lua
+doom-package:company-lua if doom-module::completion company
+doom-package:fennel-mode if doom-module:+fennel
+doom-package:lua-mode
+if doom-module:+moonscript
+doom-package:flycheck-moonscript if doom-module::checkers syntax
+doom-package:moonscript-mode
 #+begin_src emacs-lisp
 (use-package lua-mode)
 #+end_src
+
+** JSON
+doom-package:counsel-jq if doom-module::completion ivy
+doom-package:json-mode
+doom-package:json-snatcher
 
 ** TOML
 #+begin_src emacs-lisp
@@ -635,3 +973,6 @@
 #+begin_src emacs-lisp
 (use-package yaml-mode)
 #+end_src
+
+* Other
+** Telega

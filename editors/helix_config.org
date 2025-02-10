@@ -21,6 +21,9 @@ inherits = "dracula"
 line-number = "relative"
 scrolloff = 10
 cursorline = true
+           
+[editor.file-picker]
+hidden = false    
 
 [editor.indent-guides]
 render = true
